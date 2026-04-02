@@ -18,38 +18,38 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   // Scene
+  // Scene
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x050505);
 
-  // Camera (top-down)
+// Load space background
+  const texLoader = new THREE.TextureLoader();
+  scene.background = texLoader.load('space.jpg');
+
+
   // Camera (angled top-down)
-const aspect = window.innerWidth / window.innerHeight;
-const orthoSize = 10;
+  const aspect = window.innerWidth / window.innerHeight;
+  const orthoSize = 6;
 
-camera = new THREE.OrthographicCamera(
-  -orthoSize * aspect,
-  orthoSize * aspect,
-  orthoSize,
-  -orthoSize,
-  0.1,
-  100
-);
+  camera = new THREE.OrthographicCamera(
+    -orthoSize * aspect,
+    orthoSize * aspect,
+    orthoSize,
+    -orthoSize,
+    0.1,
+    100
+  );
 
-// --- UPDATED CAMERA POSITION ---
-camera.position.set(0, 14, 14);
-camera.lookAt(0, 0, 0);
-
+  camera.position.set(0, 10, 10);
+  camera.lookAt(0, 0, 0);
 
   // Lights
   const hemi = new THREE.HemisphereLight(0xffffff, 0x222222, 0.8);
   scene.add(hemi);
 
-  const dir = new THREE.DirectionalLight(0xffffff, 0.8);
-  dir.position.set(5, 10, 5);
-  scene.add(dir);
+  
 
-  // Attunement scene
-  attunement = new AttunementScene(scene);
+  // Attunement scene (UPDATED)
+  attunement = new AttunementScene(scene, camera);
 
   // Events
   window.addEventListener('resize', onWindowResize);
